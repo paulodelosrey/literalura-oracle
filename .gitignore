@@ -1,33 +1,69 @@
-HELP.md
-target/
-!.mvn/wrapper/maven-wrapper.jar
-!**/src/main/**/target/
-!**/src/test/**/target/
+# Compiled class files
+*.class
 
-### STS ###
-.apt_generated
-.classpath
-.factorypath
-.project
-.settings
-.springBeans
-.sts4-cache
+# Log files
+*.log
+*.log.*
 
-### IntelliJ IDEA ###
-.idea
-*.iws
+# Maven outputs
+/target/
+!/target/*.war
+!/target/*.jar
+
+# Package files
+*.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# Dependency directories (might not be necessary to ignore if using Maven or Gradle)
+/lib/
+
+# IDE and editor files
+/.idea/
 *.iml
+*.iws
 *.ipr
+*.swp
+*.*.sw?
+.DS_Store
 
-### NetBeans ###
-/nbproject/private/
-/nbbuild/
-/dist/
-/nbdist/
-/.nb-gradle/
-build/
-!**/src/main/**/build/
-!**/src/test/**/build/
+# OS generated files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
 
-### VS Code ###
-.vscode/
+# Application specific files
+/application.properties
+/application.yml
+!/src/main/resources/application.properties
+!/src/main/resources/application.yml
+
+# Local configuration file (for instance, used for Docker)
+docker-compose.override.yml
+
+# JPA generated files
+/jpa-metamodel/
+
+# PostgreSQL driver specific files (if any specific caching or config files are used)
+# (No typical files to ignore specific to the PostgreSQL driver, just ensure database connection info is not pushed)
+
+# Security
+*.jks
+*.p12
+*.keystore
+*.truststore
+/.env
+
+# Backup files
+*~
+*.bak
+*.tmp
+
+# IntelliJ local history
+/.history/
+
