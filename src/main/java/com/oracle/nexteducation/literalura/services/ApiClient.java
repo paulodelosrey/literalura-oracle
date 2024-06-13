@@ -4,6 +4,10 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.oracle.nexteducation.literalura.models.Book;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import java.io.IOException;
 import java.net.URI;
 import java.net.URLEncoder;
@@ -12,7 +16,15 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
 
+@Service
 public class ApiClient {
+    private final BookService bookService;
+
+    @Autowired
+    public ApiClient(BookService bookService) {
+        this.bookService = bookService;
+    }
+
     public void searchBooks(String keyword) {
         try {
             String encodedKeyword = URLEncoder.encode(keyword, StandardCharsets.UTF_8.toString());
@@ -41,24 +53,24 @@ public class ApiClient {
             JsonArray results = jsonObject.getAsJsonArray("results");
             if (results != null && !results.isEmpty()) {
                 JsonObject firstBook = results.get(0).getAsJsonObject();
-                String title = firstBook.get("title").getAsString();
-                JsonArray authorsArray = firstBook.getAsJsonArray("authors");
-                String author = authorsArray.size() > 0 ? authorsArray.get(0).getAsJsonObject().get("name").getAsString() : "No author listed";
-                JsonArray languages = firstBook.getAsJsonArray("languages");
-                String language = languages.size() > 0 ? languages.get(0).getAsString() : "No language listed";
-                int downloadCount = firstBook.get("download_count").getAsInt();
-
-                System.out.println("Book Details:");
-                System.out.println("Title: " + title);
-                System.out.println("Author: " + author);
-                System.out.println("Language: " + language);
-                System.out.println("Download Count: " + downloadCount);
+                Book book = new Book(
+                        firstBook.get("title").getAsString(),
+                        firstBook.getAsJsonArray("authors").get(0).getAsJsonObject().get("name").getAsString(),
+                        firstBook.getAsJsonArray("languages").get(0).getAsString(),
+                        firstBook.get("download_count").getAsInt()
+                );
+                bookService.addBook(book);
+                System.out.println(book);
+                System.out.println("Book added!");
             } else {
-                System.out.println("No books found in the results.");
+                System.out.println("No books found.");
             }
         } else {
-            System.out.println("The response is not a JSON Object.");
+            System.out.println("Response is not a JSON object.");
         }
     }
+
+
 }
+
 
