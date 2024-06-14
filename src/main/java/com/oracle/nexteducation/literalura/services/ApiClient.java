@@ -53,12 +53,23 @@ public class ApiClient {
             JsonArray results = jsonObject.getAsJsonArray("results");
             if (results != null && !results.isEmpty()) {
                 JsonObject firstBook = results.get(0).getAsJsonObject();
-                Book book = new Book(
-                        firstBook.get("title").getAsString(),
-                        firstBook.getAsJsonArray("authors").get(0).getAsJsonObject().get("name").getAsString(),
-                        firstBook.getAsJsonArray("languages").get(0).getAsString(),
-                        firstBook.get("download_count").getAsInt()
-                );
+                String title = firstBook.get("title").getAsString();
+                String language = firstBook.getAsJsonArray("languages").get(0).getAsString();
+                int downloadCount = firstBook.get("download_count").getAsInt();
+
+                String authorName = "Unknown Author";
+                Integer birthYear = null;
+                Integer deathYear = null;
+
+                JsonArray authorsArray = firstBook.getAsJsonArray("authors");
+                if (authorsArray != null && authorsArray.size() > 0) {
+                    JsonObject author = authorsArray.get(0).getAsJsonObject();
+                    authorName = author.get("name").getAsString();
+                    birthYear = author.has("birth_year") && !author.get("birth_year").isJsonNull() ? author.get("birth_year").getAsInt() : null;
+                    deathYear = author.has("death_year") && !author.get("death_year").isJsonNull() ? author.get("death_year").getAsInt() : null;
+                }
+
+                Book book = new Book(title, authorName, language, downloadCount, birthYear, deathYear);
                 bookService.addBook(book);
                 System.out.println(book);
                 System.out.println("Book added!");
@@ -69,6 +80,8 @@ public class ApiClient {
             System.out.println("Response is not a JSON object.");
         }
     }
+
+
 
 
 }

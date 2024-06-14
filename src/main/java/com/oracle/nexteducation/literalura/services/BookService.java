@@ -4,6 +4,7 @@ import com.oracle.nexteducation.literalura.models.Book;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class BookService {
@@ -16,5 +17,14 @@ public class BookService {
     public List<Book> getBooks() {
         return new ArrayList<>(books);
     }
+
+    public List<Book> getBooksByLanguage(String language) {
+        return books.stream()
+                .filter(book -> book.getLanguage().equalsIgnoreCase(language))
+                .collect(Collectors.toList());
+    }
+
 }
+
+
 
