@@ -12,25 +12,6 @@ El proyecto está organizado en los siguientes paquetes:
 - `com.oracle.nexteducation.literalura.repositories`: Contiene las interfaces de repositorio `AuthorRepository` y `BookRepository`.
 - `com.oracle.nexteducation.literalura.services`: Contiene las clases de servicio `AuthorService`, `BookService` y `ApiClient`.
 - `com.oracle.nexteducation.literalura`: Contiene la clase principal `Application`.
-plaintext
-src
-└── main
-└── java
-└── com.oracle.nexteducation.literalura
-├── models
-│   ├── Author
-│   └── Book
-├── repositories
-│   ├── AuthorRepository
-│   └── BookRepository
-├── services
-│   ├── ApiClient
-│   ├── AuthorService
-│   └── BookService
-└── Application
-└── resources
-└── application.properties
-
 
 ## Modelos
 
